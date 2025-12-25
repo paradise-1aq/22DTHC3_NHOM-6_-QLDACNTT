@@ -1,0 +1,351 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div id="carouselExampleAutoplaying" class="carousel slide mb-4" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <div class="carousel-image-container" style="height: 600px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                <img src="~/images/banner/banner5.jpg" class="d-block w-100" alt="Banner 1" style="object-fit: cover; width: 100%; height: 100%;">
+            </div>
+            <div class="carousel-caption d-none d-md-block" style="background-color: rgba(0, 0, 0, 0.6); padding: 10px; border-radius: 10px; max-width: 80%;margin-bottom: 4%;">
+                <h2 class="fw-bold text-uppercase" style="font-size: 2.5rem; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);">KHÁM PHÁ SỨC MẠNH BÊN TRONG BẠN</h2>
+                <p class="fs-4 mt-3" style="text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);">Tập luyện không chỉ thay đổi cơ thể mà còn nâng cao tinh thần và ý chí</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div class="carousel-image-container" style="height: 600px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                <img src="~/images/banner/banner3.jpg" class="d-block w-100" alt="Banner 2" style="object-fit: cover; width: 100%; height: 100%;">
+            </div>
+            <div class="carousel-caption d-none d-md-block" style="background-color: rgba(0, 0, 0, 0.6); padding: 20px; border-radius: 10px; max-width: 80%; margin-left: 10%; margin-right: auto;">
+                <h2 class="fw-bold text-uppercase" style="font-size: 2.5rem; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);">TẬP LUYỆN CÙNG CHUYÊN GIA</h2>
+                <p class="fs-4 mt-3" style="text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);">Đội ngũ huấn luyện viên chuyên nghiệp sẽ đồng hành cùng bạn trên hành trình chinh phục mục tiêu</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div class="carousel-image-container" style="height: 600px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                <img src="~/images/banner/banner4.jpg" class="d-block w-100" alt="Banner 3" style="object-fit: cover; width: 100%; height: 100%;">
+            </div>
+            <div class="carousel-caption d-none d-md-block" style="background-color: rgba(0, 0, 0, 0.6); padding: 20px; border-radius: 10px; max-width: 80%; margin-left: 15%; margin-right: 15%;">
+                <h2 class="fw-bold text-uppercase" style="font-size: 2.5rem; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);">THIẾT BỊ HIỆN ĐẠI - KẾT QUẢ VƯỢT TRỘI</h2>
+                <p class="fs-4 mt-3" style="text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);">Trải nghiệm không gian tập luyện đẳng cấp với trang thiết bị tối tân nhất</p>
+            </div>
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+<!-- Phần giới thiệu -->
+<div class="container my-5">
+    <div class="row">
+        <div class="col-12 text-center mb-5">
+            <h2 class="display-4 fw-bold text-uppercase position-relative">
+                <span class="position-relative">
+                    Chào mừng đến với GYM Center
+                    <span class="position-absolute w-50" style="height: 4px; background-color: #ff4500; bottom: -10px; left: 25%;"></span>
+                </span>
+            </h2>
+            <p class="lead mt-4">Nơi bạn tìm thấy phiên bản tốt nhất của chính mình</p>
+        </div>
+    </div>
+
+    <!-- Video hướng dẫn tập luyện -->
+    <div class="row mb-5">
+        <div class="col-12 text-center mb-4">
+            <h3 class="fw-bold text-uppercase">Video hướng dẫn tập luyện</h3>
+            <p class="text-muted">Học hỏi từ những chuyên gia hàng đầu</p>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="ratio ratio-16x9 shadow-lg rounded overflow-hidden">
+                <iframe src="https://www.youtube.com/embed/2MoGxae-zyo" title="Hướng dẫn tập Deadlift chuẩn form" allowfullscreen></iframe>
+            </div>
+            <h5 class="mt-3 fw-bold">Hướng dẫn tập Deadlift chuẩn form</h5>
+            <p class="text-muted">Kỹ thuật và lưu ý quan trọng khi thực hiện bài tập Deadlift</p>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="ratio ratio-16x9 shadow-lg rounded overflow-hidden">
+                <iframe src="https://www.youtube.com/embed/rT7DgCr-3pg" title="Hướng dẫn tập Squat hiệu quả" allowfullscreen></iframe>
+            </div>
+            <h5 class="mt-3 fw-bold">Hướng dẫn tập Squat hiệu quả</h5>
+            <p class="text-muted">Các bước thực hiện Squat đúng cách để tránh chấn thương</p>
+        </div>
+    </div>
+
+    <!-- Các tư thế tập luyện -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="card border-0 shadow-lg h-100 overflow-hidden">
+                <img src="~/images/homeImg/anh1.jfif" class="card-img-top" alt="Deadlift" style="height: 250px; object-fit: cover;">
+                <div class="card-body">
+                    <h4 class="card-title fw-bold">Deadlift</h4>
+                    <p class="card-text">Bài tập toàn thân giúp phát triển sức mạnh cốt lõi và cải thiện tư thế.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-0 shadow-lg h-100 overflow-hidden">
+                <img src="~/images/homeImg/anh6.jfif" class="card-img-top" alt="Bench Press" style="height: 250px; object-fit: cover;">
+                <div class="card-body">
+                    <h4 class="card-title fw-bold">Bench Press</h4>
+                    <p class="card-text">Bài tập phát triển cơ ngực, vai và tay, tăng sức mạnh phần thân trên.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-0 shadow-lg h-100 overflow-hidden">
+                <img src="~/images/homeImg/anh2.jfif" class="card-img-top" alt="Squat" style="height: 250px; object-fit: cover;">
+                <div class="card-body">
+                    <h4 class="card-title fw-bold">Squat</h4>
+                    <p class="card-text">Bài tập cơ bản giúp phát triển cơ chân, mông và tăng cường sức mạnh tổng thể.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Phòng tập hiện đại -->
+    <div class="row align-items-center my-5">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+            <div class="position-relative">
+                <img src="~/images/homeImg/anh3.jfif" alt="Phòng tập hiện đại" class="img-fluid rounded-lg shadow-lg" style="object-fit: cover;">
+                <div class="position-absolute" style="bottom: -20px; right: -20px; width: 150px; height: 150px; background-color: #ff4500; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    <div class="text-white text-center">
+                        <h3 class="mb-0 fw-bold">10+</h3>
+                        <p class="mb-0">Năm kinh nghiệm</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <h2 class="display-5 fw-bold mb-4">Không gian tập luyện đẳng cấp</h2>
+            <p class="lead">Phòng tập của chúng tôi được trang bị đầy đủ các thiết bị hiện đại nhất, đáp ứng mọi nhu cầu tập luyện từ người mới bắt đầu đến vận động viên chuyên nghiệp.</p>
+            <ul class="list-unstyled mt-4">
+                <li class="d-flex align-items-center mb-3">
+                    <i class="bi bi-check-circle-fill text-success fs-4 me-3"></i>
+                    <span>Thiết bị tập luyện cao cấp từ các thương hiệu hàng đầu</span>
+                </li>
+                <li class="d-flex align-items-center mb-3">
+                    <i class="bi bi-check-circle-fill text-success fs-4 me-3"></i>
+                    <span>Không gian rộng rãi, thoáng mát với hệ thống điều hòa hiện đại</span>
+                </li>
+                <li class="d-flex align-items-center mb-3">
+                    <i class="bi bi-check-circle-fill text-success fs-4 me-3"></i>
+                    <span>Phòng thay đồ, tắm sang trọng và tiện nghi</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Huấn luyện viên -->
+    <div class="row my-5">
+        <div class="col-12 text-center mb-5">
+            <h2 class="display-5 fw-bold text-uppercase position-relative">
+                <span class="position-relative">
+                    Đội ngũ huấn luyện viên
+                    <span class="position-absolute w-50" style="height: 4px; background-color: #ff4500; bottom: -10px; left: 25%;"></span>
+                </span>
+            </h2>
+            <p class="lead mt-4">Những chuyên gia hàng đầu sẽ đồng hành cùng bạn</p>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card border-0 shadow-lg h-100 trainer-card">
+                <img src="~/images/homeImg/anh4.jfif" class="card-img-top" alt="Huấn luyện viên 1" style="height: 350px; object-fit: cover;">
+                <div class="card-body text-center">
+                    <h4 class="card-title fw-bold"></h4>
+                    <p class="text-muted">Chuyên gia thể hình</p>
+                    <p class="card-text">10 năm kinh nghiệm trong lĩnh vực huấn luyện thể hình và sức mạnh.</p>
+                    <div class="social-icons mt-3">
+                        <a href="#" class="text-dark me-2"><i class="bi bi-facebook fs-5"></i></a>
+                        <a href="#" class="text-dark me-2"><i class="bi bi-instagram fs-5"></i></a>
+                        <a href="#" class="text-dark"><i class="bi bi-linkedin fs-5"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card border-0 shadow-lg h-100 trainer-card">
+                <img src="~/images/homeImg/anh5.jfif" class="card-img-top" alt="Huấn luyện viên 2" style="height: 350px; object-fit: cover;">
+                <div class="card-body text-center">
+                    <h4 class="card-title fw-bold"></h4>
+                    <p class="text-muted">Chuyên gia Yoga & Pilates</p>
+                    <p class="card-text">Chuyên gia về các bài tập linh hoạt, cân bằng và tăng cường sức khỏe tinh thần.</p>
+                    <div class="social-icons mt-3">
+                        <a href="#" class="text-dark me-2"><i class="bi bi-facebook fs-5"></i></a>
+                        <a href="#" class="text-dark me-2"><i class="bi bi-instagram fs-5"></i></a>
+                        <a href="#" class="text-dark"><i class="bi bi-linkedin fs-5"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card border-0 shadow-lg h-100 trainer-card">
+                <img src="~/images/homeImg/anh6.jfif" class="card-img-top" alt="Huấn luyện viên 3" style="height: 350px; object-fit: cover;">
+                <div class="card-body text-center">
+                    <h4 class="card-title fw-bold"></h4>
+                    <p class="text-muted">Chuyên gia dinh dưỡng</p>
+                    <p class="card-text">Tư vấn chế độ dinh dưỡng phù hợp với từng mục tiêu tập luyện cụ thể.</p>
+                    <div class="social-icons mt-3">
+                        <a href="#" class="text-dark me-2"><i class="bi bi-facebook fs-5"></i></a>
+                        <a href="#" class="text-dark me-2"><i class="bi bi-instagram fs-5"></i></a>
+                        <a href="#" class="text-dark"><i class="bi bi-linkedin fs-5"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Thông tin cẩm nang tập luyện -->
+    <div class="row my-5 bg-light py-5 rounded-3 shadow">
+        <div class="col-12 text-center mb-4">
+            <h2 class="fw-bold text-uppercase position-relative">
+                <span class="position-relative">
+                    Cẩm nang tập luyện
+                    <span class="position-absolute w-50" style="height: 4px; background-color: #ff4500; bottom: -10px; left: 25%;"></span>
+                </span>
+            </h2>
+            <p class="lead mt-4">Những kiến thức hữu ích cho hành trình tập luyện của bạn</p>
+        </div>
+        
+        <div class="col-md-6 mb-4">
+            <div class="card border-0 shadow h-100">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="~/images/homeImg/anh7.jfif" class="img-fluid rounded-start h-100" alt="Dinh dưỡng" style="object-fit: cover;">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h4 class="card-title fw-bold">Dinh dưỡng cho người tập Gym</h4>
+                            <p class="card-text">Chế độ ăn đóng vai trò quan trọng trong việc xây dựng cơ bắp và phục hồi sau tập luyện. Đảm bảo cung cấp đủ protein, carbohydrate và chất béo lành mạnh.</p>
+                            <ul class="mt-2">
+                                <li>Protein: 1.6-2.2g/kg cân nặng</li>
+                                <li>Carbs: 4-7g/kg cân nặng</li>
+                                <li>Chất béo: 0.5-1.5g/kg cân nặng</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6 mb-4">
+            <div class="card border-0 shadow h-100">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="~/images/homeImg/anh8.jfif" class="img-fluid rounded-start h-100" alt="Phục hồi" style="object-fit: cover;">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h4 class="card-title fw-bold">Phục hồi sau tập luyện</h4>
+                            <p class="card-text">Phục hồi là một phần quan trọng không kém trong quá trình tập luyện. Cơ bắp phát triển trong thời gian nghỉ ngơi, không phải khi tập.</p>
+                            <ul class="mt-2">
+                                <li>Ngủ đủ 7-9 giờ mỗi đêm</li>
+                                <li>Uống đủ nước (2-3 lít/ngày)</li>
+                                <li>Thực hiện các bài tập giãn cơ</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6 mb-4">
+            <div class="card border-0 shadow h-100">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="~/images/homeImg/anh9.jfif" class="img-fluid rounded-start h-100" alt="Kỹ thuật" style="object-fit: cover;">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h4 class="card-title fw-bold">Kỹ thuật tập luyện đúng cách</h4>
+                            <p class="card-text">Tập đúng kỹ thuật giúp tối ưu hiệu quả và tránh chấn thương. Luôn ưu tiên form tập chuẩn hơn là tăng trọng lượng.</p>
+                            <ul class="mt-2">
+                                <li>Khởi động kỹ trước khi tập</li>
+                                <li>Tập trung vào cảm giác cơ</li>
+                                <li>Tăng trọng lượng từ từ</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6 mb-4">
+            <div class="card border-0 shadow h-100">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="~/images/homeImg/anh10.jfif" class="img-fluid rounded-start h-100" alt="Động lực" style="object-fit: cover;">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h4 class="card-title fw-bold">Duy trì động lực tập luyện</h4>
+                            <p class="card-text">Giữ động lực tập luyện lâu dài là thách thức với nhiều người. Đặt mục tiêu rõ ràng và theo dõi tiến độ sẽ giúp bạn kiên trì hơn.</p>
+                            <ul class="mt-2">
+                                <li>Đặt mục tiêu SMART</li>
+                                <li>Ghi chép nhật ký tập luyện</li>
+                                <li>Tìm bạn tập cùng</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Video động lực -->
+    <div class="row my-5">
+        <div class="col-12 text-center mb-4">
+            <h3 class="fw-bold text-uppercase">Video động lực tập luyện</h3>
+            <p class="text-muted">Tiếp thêm năng lượng cho hành trình của bạn</p>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="ratio ratio-16x9 shadow-lg rounded overflow-hidden">
+                <iframe src="https://www.youtube.com/embed/JHiKDa4ip_Q" title="Động lực tập Gym" allowfullscreen></iframe>
+            </div>
+            <h5 class="mt-3 fw-bold">Không bao giờ từ bỏ - Hành trình chinh phục bản thân</h5>
+            <p class="text-muted">Những câu chuyện truyền cảm hứng từ các vận động viên thể hình</p>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="ratio ratio-16x9 shadow-lg rounded overflow-hidden">
+                <iframe src="https://www.youtube.com/embed/rT7DgCr-3pg" title="Động lực tập Gym" allowfullscreen></iframe>
+            </div>
+            <h5 class="mt-3 fw-bold">Vượt qua giới hạn - Động lực tập luyện</h5>
+            <p class="text-muted">Tiếp thêm năng lượng và cảm hứng cho buổi tập tiếp theo của bạn.</p>
+        </div>
+    </div>
+</div>
+
+<!-- CSS cho hiệu ứng hover -->
+<style>
+    .trainer-card {
+        transition: all 0.3s ease;
+    }
+    
+    .trainer-card:hover {
+        transform: translateY(-10px);
+    }
+    
+    .card {
+        transition: all 0.3s ease;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
+    }
+</style>

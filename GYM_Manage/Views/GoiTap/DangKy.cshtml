@@ -1,0 +1,140 @@
+@model GYM_Manage.Models.GoiTap
+@{
+	ViewData["Title"] = "Đăng Ký Gói Tập";
+}
+
+<div class="container py-5">
+	<!-- Header Section -->
+	<div class="row mb-5">
+		<div class="col-12 text-center">
+			<h1 class="fw-bold display-4 mb-3">Đăng Ký Gói Tập</h1>
+			<p class="lead text-muted">Hoàn tất đăng ký gói tập phù hợp với bạn</p>
+		</div>
+	</div>
+
+	<!-- Package Details Section -->
+	<div class="row">
+		<div class="col-lg-6 mb-4">
+			<div class="card border-0 shadow-lg h-100">
+				<div class="position-relative">
+					<img src="@(string.IsNullOrEmpty(Model.AnhDemo) ? "/images/default-package.jpg" : Model.AnhDemo)"
+						 class="card-img-top" alt="@Model.TenGoiTap" style="height: 300px; object-fit: cover;">
+
+					@if (Model.TrangThai == "KhuyenMai")
+					{
+						<div class="position-absolute top-0 end-0 bg-warning text-dark p-2 m-2 rounded-pill">
+							<i class="bi bi-tag-fill"></i> Khuyến mãi
+						</div>
+					}
+				</div>
+				<div class="card-body">
+					<h3 class="card-title fw-bold">@Model.TenGoiTap</h3>
+					<div class="d-flex justify-content-between align-items-center my-3">
+						<span class="badge bg-primary rounded-pill fs-6 px-3 py-2">@Model.ThoiHan ngày</span>
+						<h3 class="text-primary mb-0">@Model.GiaTien.ToString("N0") VNĐ</h3>
+					</div>
+					<p class="card-text">@Model.MoTa</p>
+					
+					<hr class="my-4">
+					
+					<div class="d-flex justify-content-between mb-2">
+						<span><i class="bi bi-clock me-2"></i>Thời hạn:</span>
+						<span class="fw-bold">@Model.ThoiHan ngày</span>
+					</div>
+					<div class="d-flex justify-content-between mb-2">
+						<span><i class="bi bi-currency-dollar me-2"></i>Giá gói tập:</span>
+						<span class="fw-bold">@Model.GiaTien.ToString("N0") VNĐ</span>
+					</div>
+					<div class="d-flex justify-content-between mb-2">
+						<span><i class="bi bi-people-fill me-2"></i>Đối tượng:</span>
+						<span class="fw-bold">Phù hợp mọi đối tượng</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-lg-6">
+			<div class="card border-0 shadow-lg">
+				<div class="card-header bg-primary text-white py-3">
+					<h4 class="mb-0"><i class="bi bi-clipboard-check me-2"></i>Xác nhận đăng ký</h4>
+				</div>
+				<div class="card-body p-4">
+					@if (TempData["ErrorMessage"] != null)
+					{
+						<div class="alert alert-danger">
+							@TempData["ErrorMessage"]
+						</div>
+					}
+
+					<form asp-action="DangKy" method="post">
+						<input type="hidden" asp-for="MaGoiTap" />
+						
+						<div class="mb-4">
+							<h5>Thông tin gói tập</h5>
+							<div class="bg-light p-3 rounded">
+								<p class="mb-1"><strong>Tên gói:</strong> @Model.TenGoiTap</p>
+								<p class="mb-1"><strong>Thời hạn:</strong> @Model.ThoiHan ngày</p>
+								<p class="mb-0"><strong>Giá:</strong> @Model.GiaTien.ToString("N0") VNĐ</p>
+							</div>
+						</div>
+						
+						<div class="mb-4">
+							<h5>Điều khoản & Điều kiện</h5>
+							<div class="bg-light p-3 rounded mb-3" style="max-height: 150px; overflow-y: auto;">
+								<p>1. Gói tập có hiệu lực kể từ ngày đăng ký thành công.</p>
+								<p>2. Không được chuyển nhượng gói tập cho người khác.</p>
+								<p>3. Không hoàn tiền khi đã đăng ký gói tập.</p>
+								<p>4. Tuân thủ nội quy của phòng tập trong suốt thời gian sử dụng dịch vụ.</p>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" id="acceptTerms" required>
+								<label class="form-check-label" for="acceptTerms">
+									Tôi đã đọc và đồng ý với các điều khoản trên
+								</label>
+							</div>
+						</div>
+						
+						<div class="d-grid gap-2">
+							<button type="submit" class="btn btn-primary btn-lg">
+								<i class="bi bi-check-circle me-2"></i>Xác nhận đăng ký
+							</button>
+							<a asp-action="Index" class="btn btn-outline-secondary">
+								<i class="bi bi-arrow-left me-2"></i>Quay lại danh sách gói tập
+							</a>
+						</div>
+					</form>
+				</div>
+			</div>
+			
+			<div class="card border-0 shadow-lg mt-4">
+				<div class="card-body p-4">
+					<h5><i class="bi bi-info-circle me-2"></i>Hỗ trợ</h5>
+					<p>Nếu bạn cần hỗ trợ hoặc có thắc mắc về gói tập, vui lòng liên hệ:</p>
+					<p><i class="bi bi-telephone me-2"></i>Hotline: <strong>0123 456 789</strong></p>
+					<p><i class="bi bi-envelope me-2"></i>Email: <strong>support@gymmanage.com</strong></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+	.hover-shadow:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+		transition: all 0.3s ease;
+	}
+	
+	.card {
+		transition: all 0.3s ease;
+	}
+	
+	.btn-primary {
+		transition: all 0.3s ease;
+	}
+	
+	.btn-primary:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 5px 15px rgba(0,123,255,0.3);
+	}
+</style>

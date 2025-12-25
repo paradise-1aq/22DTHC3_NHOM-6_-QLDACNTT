@@ -1,0 +1,131 @@
+﻿@{
+    ViewData["Title"] = "Đăng nhập";
+    Layout = "_Layout";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg border-0 rounded-lg">
+                <div class="card-header text-white text-center py-4 bg-primary">
+                    <h3 class="mb-0 fw-bold">ĐĂNG NHẬP</h3>
+                </div>
+                <div class="card-body p-4 light-theme">
+                    @if (!string.IsNullOrEmpty(ViewBag.Error))
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            @ViewBag.Error
+                        </div>
+                    }
+                    <form method="post" asp-controller="Auth" asp-action="Login">
+                        <div class="mb-3">
+                            <label for="tenDangNhap" class="form-label">Tên đăng nhập</label>
+                            <div class="input-group">
+                                <span class="input-group-text light-input-group"><i class="bi bi-person-fill"></i></span>
+                                <input type="text" class="form-control light-input" id="tenDangNhap" name="tenDangNhap" placeholder="Nhập tên đăng nhập" required>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="matKhau" class="form-label">Mật khẩu</label>
+                            <div class="input-group">
+                                <span class="input-group-text light-input-group"><i class="bi bi-lock-fill"></i></span>
+                                <input type="password" class="form-control light-input" id="matKhau" name="matKhau" placeholder="Nhập mật khẩu" required>
+                            </div>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">
+                                Ghi nhớ đăng nhập
+                            </label>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">Đăng nhập</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center py-3 light-footer">
+                    <div class="small">
+                        <p>Chưa có tài khoản? <a href="@Url.Action("Register", "Auth")" class="text-decoration-none accent-link">Đăng ký ngay</a></p>
+                        <a href="#" class="text-decoration-none accent-link">Quên mật khẩu?</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #0a0a0a;
+            background-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+        }
+        .card {
+            border-radius: 1.2rem;
+            overflow: hidden;
+            background-color: rgba(245, 245, 245, 0.85);
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        .bg-primary {
+            background: linear-gradient(135deg, #2c3e50, #4e73df) !important;
+            border-bottom: 2px solid #4e73df;
+        }
+        .light-theme {
+            background-color: rgba(250, 250, 250, 0.9);
+            color: #333;
+        }
+        .light-input {
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 1px solid #ccc;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+        .light-input:focus {
+            background-color: #fff;
+            border-color: #4e73df;
+            box-shadow: 0 0 0 0.25rem rgba(78, 115, 223, 0.25);
+        }
+        .light-input::placeholder {
+            color: #888;
+        }
+        .light-input-group {
+            background-color: rgba(240, 240, 240, 0.9);
+            border: 1px solid #ccc;
+            color: #4e73df;
+        }
+        .light-footer {
+            background-color: rgba(240, 240, 240, 0.9);
+            border-top: 1px solid #e0e0e0;
+        }
+        .btn-primary {
+            background-color: #4e73df;
+            border: none;
+            color: white;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(78, 115, 223, 0.5);
+            background-color: #375ad3;
+        }
+        .accent-link {
+            color: #4e73df;
+            transition: all 0.3s;
+        }
+        .accent-link:hover {
+            color: #2c3e50;
+            text-decoration: underline !important;
+        }
+        .form-check-input:checked {
+            background-color: #4e73df;
+            border-color: #4e73df;
+        }
+    </style>
+}

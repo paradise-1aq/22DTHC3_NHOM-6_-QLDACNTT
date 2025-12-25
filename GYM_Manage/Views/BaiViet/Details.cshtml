@@ -1,0 +1,203 @@
+@model GYM_Manage.Models.BaiViet
+@{
+    ViewData["Title"] = Model.TieuDe;
+}
+
+<div class="container py-5">
+    <!-- Breadcrumb -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/" class="text-decoration-none">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="/BaiViet" class="text-decoration-none">Bài viết</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">@Model.TieuDe</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Main Content -->
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-3 overflow-hidden mb-4">
+                <!-- Featured Image -->
+                <div class="position-relative">
+                    <div style="height: 400px; overflow: hidden;">
+                        @if (!string.IsNullOrEmpty(Model.HinhAnh))
+                        {
+                            <img src="@Model.HinhAnh" class="img-fluid w-100 h-100" style="object-fit: cover;" alt="@Model.TieuDe">
+                        }
+                        else
+                        {
+                            <img src="~/images/no-image.png" class="img-fluid w-100 h-100" style="object-fit: cover;" alt="No Image">
+                        }
+                    </div>
+                    <div class="position-absolute bottom-0 start-0 w-100 p-4" style="background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);">
+                        <h1 class="text-white fw-bold mb-0">@Model.TieuDe</h1>
+                    </div>
+                </div>
+
+                <!-- Article Content -->
+                <div class="card-body p-4 p-lg-5">
+                    <!-- Article Meta -->
+                    <div class="d-flex align-items-center mb-4 pb-3 border-bottom">
+                        <img src="~/images/avatar/avatar.jpg" class="rounded-circle me-3" width="50" height="50" alt="Avatar">
+                        <div>
+                            <h6 class="mb-1 fw-bold">@Model.NguoiTao?.HoTen</h6>
+                            <div class="d-flex align-items-center text-muted small">
+                                <span><i class="bi bi-calendar3 me-1"></i>Đăng ngày: @Model.NgayDang.ToString("dd/MM/yyyy HH:mm")</span>
+                                @if (Model.NgayCapNhat.HasValue)
+                                {
+                                    <span class="mx-2">•</span>
+                                    <span><i class="bi bi-pencil-square me-1"></i>Cập nhật: @Model.NgayCapNhat.Value.ToString("dd/MM/yyyy HH:mm")</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Article Description -->
+                    <div class="lead mb-4 fw-medium fst-italic">
+                        @Model.MoTaNgan
+                    </div>
+
+                    <!-- Article Content -->
+                    <div class="article-content">
+                        @Html.Raw(Model.NoiDung)
+                    </div>
+
+                    <!-- Social Share -->
+                    <div class="mt-5 pt-4 border-top">
+                        <h5 class="mb-3">Chia sẻ bài viết</h5>
+                        <div class="d-flex gap-2">
+                            <a href="https://www.facebook.com/sharer/sharer.php?u=@(Context.Request.Scheme)://@(Context.Request.Host)@(Context.Request.Path)" target="_blank" class="btn btn-outline-primary">
+                                <i class="bi bi-facebook me-2"></i>Facebook
+                            </a>
+                            <a href="https://twitter.com/intent/tweet?url=@(Context.Request.Scheme)://@(Context.Request.Host)@(Context.Request.Path)&text=@Model.TieuDe" target="_blank" class="btn btn-outline-info">
+                                <i class="bi bi-twitter me-2"></i>Twitter
+                            </a>
+                            <a href="mailto:?subject=@Model.TieuDe&body=@(Context.Request.Scheme)://@(Context.Request.Host)@(Context.Request.Path)" class="btn btn-outline-secondary">
+                                <i class="bi bi-envelope me-2"></i>Email
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Author Card -->
+            <div class="card border-0 shadow-sm rounded-3 mb-4">
+                <div class="card-body p-4">
+                    <h5 class="card-title fw-bold mb-3">Về tác giả</h5>
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="~/images/avatar/avatar.jpg" class="rounded-circle me-3" width="60" height="60" alt="Avatar">
+                        <div>
+                            <h6 class="mb-1 fw-bold">@Model.NguoiTao?.HoTen</h6>
+                            <p class="text-muted mb-0 small">Thành viên</p>
+                        </div>
+                    </div>
+                    <p class="card-text">Tác giả của nhiều bài viết về thể hình, dinh dưỡng và lối sống lành mạnh.</p>
+                </div>
+            </div>
+
+            <!-- Related Posts -->
+            <div class="card border-0 shadow-sm rounded-3 mb-4">
+                <div class="card-body p-4">
+                    <h5 class="card-title fw-bold mb-3">Bài viết liên quan</h5>
+                    
+                    @if (ViewBag.RelatedPosts != null && ((List<BaiViet>)ViewBag.RelatedPosts).Any())
+                    {
+                        @foreach (var post in (List<BaiViet>)ViewBag.RelatedPosts)
+                        {
+                            <div class="d-flex mb-3 pb-3 border-bottom">
+                                <div class="flex-shrink-0" style="width: 80px; height: 80px; overflow: hidden;">
+                                    @if (!string.IsNullOrEmpty(post.HinhAnh))
+                                    {
+                                        <img src="@post.HinhAnh" class="img-fluid rounded w-100 h-100" style="object-fit: cover;" alt="@post.TieuDe">
+                                    }
+                                    else
+                                    {
+                                        <img src="~/images/no-image.png" class="img-fluid rounded w-100 h-100" style="object-fit: cover;" alt="No Image">
+                                    }
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h6 class="mb-1"><a href="/BaiViet/Details/@post.MaBaiViet" class="text-decoration-none text-dark stretched-link">@post.TieuDe</a></h6>
+                                    <div class="small text-muted">
+                                        <i class="bi bi-calendar3 me-1"></i>@post.NgayDang.ToString("dd/MM/yyyy")
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p class="text-muted">Không có bài viết liên quan.</p>
+                    }
+                    
+                    <a href="/BaiViet" class="btn btn-outline-primary w-100 mt-2">
+                        <i class="bi bi-collection me-2"></i>Xem tất cả bài viết
+                    </a>
+                </div>
+            </div>
+
+            <!-- Search Card -->
+            <div class="card border-0 shadow-sm rounded-3">
+                <div class="card-body p-4">
+                    <h5 class="card-title fw-bold mb-3">Tìm kiếm</h5>
+                    <form asp-controller="BaiViet" asp-action="Search" method="get">
+                        <div class="input-group">
+                            <input type="text" name="keyword" class="form-control" placeholder="Tìm kiếm bài viết...">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .article-content {
+        font-size: 1.1rem;
+        line-height: 1.8;
+    }
+    
+    .article-content img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin: 1.5rem 0;
+    }
+    
+    .article-content h2, 
+    .article-content h3, 
+    .article-content h4 {
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+    }
+    
+    .article-content p {
+        margin-bottom: 1.5rem;
+    }
+    
+    .article-content ul, 
+    .article-content ol {
+        margin-bottom: 1.5rem;
+        padding-left: 1.5rem;
+    }
+    
+    .article-content blockquote {
+        border-left: 4px solid #0d6efd;
+        padding-left: 1rem;
+        font-style: italic;
+        margin: 1.5rem 0;
+        background-color: rgba(13, 110, 253, 0.05);
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+    }
+</style>

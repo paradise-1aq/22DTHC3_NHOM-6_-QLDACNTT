@@ -1,0 +1,152 @@
+@model IEnumerable<GYM_Manage.Models.BaiViet>
+@{
+    ViewData["Title"] = "Bài Viết";
+}
+
+<div class="container py-5">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="fw-bold text-primary mb-3">Bài Viết & Tin Tức</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/" class="text-decoration-none">Trang chủ</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Bài viết</li>
+                </ol>
+            </nav>
+            <hr class="my-4">
+        </div>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="row mb-5">
+        <div class="col-md-8 mx-auto">
+            <div class="card border-0 shadow rounded-pill overflow-hidden">
+                <div class="card-body p-0">
+                    <form asp-action="Search" method="get" class="d-flex">
+                        <input type="text" name="keyword" class="form-control form-control-lg border-0 py-3 px-4" 
+                               placeholder="Tìm kiếm bài viết..." style="background-color: #f8f9fa;">
+                        <button type="submit" class="btn btn-primary px-4 rounded-0" style="min-width: 150px;">
+                            <i class="bi bi-search me-2"></i>Tìm kiếm
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="text-center mt-2 text-muted small">
+                <i class="bi bi-info-circle me-1"></i>Nhập từ khóa để tìm kiếm bài viết bạn quan tâm
+            </div>
+        </div>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center py-5">
+            <i class="bi bi-info-circle-fill fs-1 d-block mb-3"></i>
+            <h4>Không có bài viết nào</h4>
+            <p class="mb-0">Hiện tại chưa có bài viết nào được đăng. Vui lòng quay lại sau.</p>
+        </div>
+    }
+    else
+    {
+        <!-- Featured Post -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="card border-0 shadow-sm overflow-hidden">
+                    <div class="row g-0">
+                        <div class="col-md-6">
+                            <div style="height: 400px; overflow: hidden;">
+                                @if (!string.IsNullOrEmpty(Model.First().HinhAnh))
+                                {
+                                    <img src="@Model.First().HinhAnh" class="img-fluid w-100 h-100" style="object-fit: cover;" alt="@Model.First().TieuDe">
+                                }
+                                else
+                                {
+                                    <img src="~/images/no-image.png" class="img-fluid w-100 h-100" style="object-fit: cover;" alt="No Image">
+                                }
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card-body d-flex flex-column h-100 p-4 p-lg-5">
+                                <div class="mb-3">
+                                    <span class="badge bg-primary">Nổi bật</span>
+                                    <span class="text-muted ms-2"><i class="bi bi-calendar3 me-1"></i>@Model.First().NgayDang.ToString("dd/MM/yyyy")</span>
+                                </div>
+                                <h2 class="card-title fw-bold mb-3">@Model.First().TieuDe</h2>
+                                <p class="card-text flex-grow-1">@Model.First().MoTaNgan</p>
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="avatar me-2">
+                                        <img src="~/images/avatar/avatar.jpg" class="rounded-circle me-2" width="40" height="40" alt="Avatar">
+                                    </div>
+                                    <div>
+                                        <p class="mb-0 fw-medium">@Model.First().NguoiTao?.HoTen</p>
+                                    </div>
+                                </div>
+                                <a asp-action="Details" asp-route-id="@Model.First().MaBaiViet" class="btn btn-outline-primary">
+                                    Đọc tiếp <i class="bi bi-arrow-right ms-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Other Posts -->
+        <div class="row">
+            <div class="col-12">
+                <h3 class="fw-bold mb-4">Bài Viết Mới Nhất</h3>
+            </div>
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5">
+            @foreach (var item in Model.Skip(1))
+            {
+                <div class="col">
+                    <div class="card h-100 border-0 shadow-sm hover-shadow transition-all">
+                        <div class="position-relative">
+                            <div style="height: 220px; overflow: hidden;">
+                                @if (!string.IsNullOrEmpty(item.HinhAnh))
+                                {
+                                    <img src="@item.HinhAnh" class="card-img-top h-100 w-100" style="object-fit: cover;" alt="@item.TieuDe">
+                                }
+                                else
+                                {
+                                    <img src="~/images/no-image.png" class="card-img-top h-100 w-100" style="object-fit: cover;" alt="No Image">
+                                }
+                            </div>
+                            <div class="position-absolute top-0 end-0 p-3">
+                                <span class="badge bg-light text-dark shadow-sm">
+                                    <i class="bi bi-calendar3 me-1"></i>@item.NgayDang.ToString("dd/MM/yyyy")
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-body p-4">
+                            <h4 class="card-title fw-bold mb-3">@item.TieuDe</h4>
+                            <p class="card-text text-muted">@(item.MoTaNgan.Length > 120 ? item.MoTaNgan.Substring(0, 120) + "..." : item.MoTaNgan)</p>
+                        </div>
+                        <div class="card-footer bg-white border-0 p-4 pt-0">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <img src="~/images/avatar/avatar.jpg" class="rounded-circle me-2" width="30" height="30" alt="Avatar">
+                                    <small class="text-muted">@item.NguoiTao?.HoTen</small>
+                                </div>
+                                <a asp-action="Details" asp-route-id="@item.MaBaiViet" class="btn btn-sm btn-outline-primary">
+                                    Đọc tiếp
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+<style>
+    .hover-shadow:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
+    }
+    .transition-all {
+        transition: all 0.3s ease;
+    }
+</style>

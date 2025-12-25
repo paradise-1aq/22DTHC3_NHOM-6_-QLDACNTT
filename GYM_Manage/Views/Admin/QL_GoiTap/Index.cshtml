@@ -1,0 +1,88 @@
+﻿@model IEnumerable<GYM_Manage.Models.GoiTap>
+@{
+    ViewData["Title"] = "Quản Lý Gói Tập";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container-fluid">
+    <h4 class="d-flex justify-content-between align-items-center mb-4">
+        <span class="fw-bolder">Quản Lý Gói Tập</span>
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="bi bi-plus"></i>
+            <span>Thêm mới</span>
+        </a>
+    </h4>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+            <h6 class="m-0 font-weight-bold">Danh sách</h6>
+            <form asp-action="Search" method="get" class="d-flex">
+                <input type="text" name="keyword" class="form-control me-2" placeholder="Tìm kiếm gói tập...">
+                <button type="submit" class="btn btn-outline-primary">
+                    <i class="bi bi-search"></i>
+                </button>
+            </form>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>Mã gói tập</th>
+                            <th>Tên gói tập</th>
+                            <th>Thời hạn</th>
+                            <th>Giá tiền</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.MaGoiTap</td>
+                                <td>@item.TenGoiTap</td>
+                                <td>@item.ThoiHan ngày</td>
+                                <td>@item.GiaTien.ToString("N0") VNĐ</td>
+                                <td>
+                                    @if (item.TrangThai == "Đang hoạt động")
+                                    {
+                                        <span class="badge bg-success">@item.TrangThai</span>
+                                    }
+                                    else if (item.TrangThai == "Khuyến mãi")
+                                    {
+                                        <span class="badge bg-warning">@item.TrangThai</span>
+                                    }
+                                    else if (item.TrangThai == "Ngưng hoạt động")
+                                    {
+                                        <span class="badge bg-danger">@item.TrangThai</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary">@item.TrangThai</span>
+                                    }
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a asp-action="Details" asp-route-id="@item.MaGoiTap" class="btn btn-sm btn-info" title="Xem chi tiết">
+                                            <i class="bi bi-info-circle"></i>
+                                        </a>
+                                        <a asp-action="Edit" asp-route-id="@item.MaGoiTap" class="btn btn-sm btn-primary" title="Sửa">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <a asp-action="Delete" asp-route-id="@item.MaGoiTap"
+                                           class="btn btn-sm btn-danger"
+                                           title="Xóa"
+                                           onclick="return confirm('Bạn có chắc chắn muốn xóa không?');">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

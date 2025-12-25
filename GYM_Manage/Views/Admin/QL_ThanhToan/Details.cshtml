@@ -1,0 +1,167 @@
+@model GYM_Manage.Models.ThanhToan
+
+@{
+    ViewData["Title"] = "Chi tiết thanh toán";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center bg-gradient-primary text-white">
+            <h5 class="m-0 font-weight-bold">Chi tiết thanh toán #@Model.MaThanhToan</h5>
+            <div>
+                <a asp-action="Index" class="btn btn-light btn-sm">
+                    <i class="bi bi-arrow-left"></i> Quay lại
+                </a>
+                <a asp-action="TaoHoaDonPDF" asp-route-id="@Model.MaThanhToan" class="btn btn-light btn-sm ms-2" target="_blank">
+                    <i class="bi bi-file-pdf"></i> Xuất PDF
+                </a>
+            </div>
+        </div>
+        <div class="card-body p-4">
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-header py-3 bg-light">
+                            <h6 class="m-0 fw-bold text-primary d-flex align-items-center">
+                                <i class="bi bi-credit-card me-2"></i>Thông tin thanh toán
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-borderless">
+                                    <tbody>
+                                        <tr>
+                                            <th class="text-secondary" style="width: 40%">Mã thanh toán:</th>
+                                            <td class="fw-bold">@Model.MaThanhToan</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-secondary">Ngày thanh toán:</th>
+                                            <td>@Model.NgayThanhToan.ToString("dd/MM/yyyy HH:mm")</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-secondary">Số tiền:</th>
+                                            <td class="fw-bold text-primary">@String.Format("{0:N0} VNĐ", Model.SoTien)</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-secondary">Phương thức:</th>
+                                            <td>@Model.PhuongThucThanhToan</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-secondary">Trạng thái:</th>
+                                            <td>
+                                                @switch (Model.TrangThai)
+                                                {
+                                                    case "ThanhCong":
+                                                        <span class="badge bg-success">Thành công</span>
+                                                        break;
+                                                    case "DangXuLy":
+                                                        <span class="badge bg-warning">Đang xử lý</span>
+                                                        break;
+                                                    case "ThatBai":
+                                                        <span class="badge bg-danger">Thất bại</span>
+                                                        break;
+                                                    case "HoanTien":
+                                                        <span class="badge bg-info">Hoàn tiền</span>
+                                                        break;
+                                                    default:
+                                                        <span class="badge bg-secondary">@Model.TrangThai</span>
+                                                        break;
+                                                }
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-header py-3 bg-light">
+                            <h6 class="m-0 fw-bold text-primary d-flex align-items-center">
+                                <i class="bi bi-person me-2"></i>Thông tin khách hàng
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-borderless">
+                                    <tbody>
+                                        <tr>
+                                            <th class="text-secondary" style="width: 40%">Mã thành viên:</th>
+                                            <td>@Model.ThanhVien.MaThanhVien</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-secondary">Họ tên:</th>
+                                            <td class="fw-bold">@Model.ThanhVien.NguoiDung.HoTen</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-secondary">Số điện thoại:</th>
+                                            <td>@Model.ThanhVien.SoDienThoai</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-secondary">Email:</th>
+                                            <td>@Model.ThanhVien.NguoiDung.Email</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card border-0 shadow-sm mt-4">
+                <div class="card-header py-3 bg-light">
+                    <h6 class="m-0 fw-bold text-primary d-flex align-items-center">
+                        <i class="bi bi-card-list me-2"></i>Thông tin gói tập
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="table-responsive">
+                                <table class="table table-borderless">
+                                    <tbody>
+                                        <tr>
+                                            <th class="text-secondary" style="width: 40%">Mã đăng ký:</th>
+                                            <td>@Model.DangKyGoiTap.MaDangKy</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-secondary">Tên gói tập:</th>
+                                            <td class="fw-bold">@Model.DangKyGoiTap.GoiTap.TenGoiTap</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-secondary">Thời hạn:</th>
+                                            <td>@Model.DangKyGoiTap.GoiTap.ThoiHan ngày</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="table-responsive">
+                                <table class="table table-borderless">
+                                    <tbody>
+                                        <tr>
+                                            <th class="text-secondary" style="width: 40%">Ngày bắt đầu:</th>
+                                            <td>@Model.DangKyGoiTap.NgayBatDau.ToString("dd/MM/yyyy")</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-secondary">Ngày kết thúc:</th>
+                                            <td>@Model.DangKyGoiTap.NgayKetThuc.ToString("dd/MM/yyyy")</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-secondary">Giá gốc:</th>
+                                            <td class="fw-bold text-primary">@String.Format("{0:N0} VNĐ", Model.DangKyGoiTap.GoiTap.GiaTien)</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

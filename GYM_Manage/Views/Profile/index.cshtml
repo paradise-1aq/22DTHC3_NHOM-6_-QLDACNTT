@@ -1,0 +1,175 @@
+@model GYM_Manage.Models.ProfileViewModel
+@{
+    ViewData["Title"] = "Thông tin cá nhân";
+}
+
+<div class="container py-5">
+    <div class="row">
+        <!-- Sidebar / Thông tin người dùng -->
+        <div class="col-lg-4 mb-4">
+            <div class="card border-0 shadow">
+                <div class="card-body text-center">
+                    <div class="mb-4">
+                        <img src="https://ui-avatars.com/api/?name=@Model.NguoiDung.HoTen&background=4e73df&color=fff" alt="Avatar" class="rounded-circle img-fluid" style="width: 150px; height: 150px; object-fit: cover;">
+                    </div>
+                    <h3 class="fw-bold">@Model.NguoiDung.HoTen</h3>
+                    <p class="text-muted">@(Model.ThanhVien != null ? "Thành viên" : "Khách hàng")</p>
+                    
+                    <hr class="my-4">
+                    
+                    <div class="text-start">
+                        <div class="mb-3">
+                            <h5 class="fw-bold"><i class="bi bi-person-fill me-2"></i>Thông tin cá nhân</h5>
+                            <p class="mb-1"><strong>Email:</strong> @Model.NguoiDung.Email</p>
+                            <p class="mb-1"><strong>Tên đăng nhập:</strong> @Model.NguoiDung.TenDangNhap</p>
+                            <p class="mb-1"><strong>Vai trò:</strong> @Model.NguoiDung.VaiTro</p>
+                            <p class="mb-1"><strong>Ngày tạo tài khoản:</strong> @Model.NguoiDung.NgayTao.ToString("dd/MM/yyyy")</p>
+                            @if (Model.NguoiDung.LanDangNhapCuoi.HasValue)
+                            {
+                                <p class="mb-1"><strong>Lần đăng nhập cuối:</strong> @Model.NguoiDung.LanDangNhapCuoi.Value.ToString("dd/MM/yyyy HH:mm")</p>
+                            }
+                        </div>
+                        
+                        @if (Model.ThanhVien != null)
+                        {
+                            <div class="mb-3">
+                                <h5 class="fw-bold"><i class="bi bi-award-fill me-2"></i>Thông tin thành viên</h5>
+                                <p class="mb-1"><strong>Mã thành viên:</strong> @Model.ThanhVien.MaThanhVien</p>
+                                <p class="mb-1"><strong>Số điện thoại:</strong> @Model.ThanhVien.SoDienThoai</p>
+                                <p class="mb-1"><strong>Địa chỉ:</strong> @Model.ThanhVien.DiaChi</p>
+                                @if (Model.ThanhVien.NgaySinh.HasValue)
+                                {
+                                    <p class="mb-1"><strong>Ngày sinh:</strong> @Model.ThanhVien.NgaySinh.Value.ToString("dd/MM/yyyy")</p>
+                                }
+                                <p class="mb-1"><strong>Giới tính:</strong> @Model.ThanhVien.GioiTinh</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="col-lg-8">
+            <!-- Gói tập đã đăng ký -->
+            <div class="card border-0 shadow mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="bi bi-calendar-check me-2"></i>Gói tập đã đăng ký</h4>
+                </div>
+                <div class="card-body">
+                    @if (Model.DangKyGoiTaps != null && Model.DangKyGoiTaps.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Mã đăng ký</th>
+                                        <th>Tên gói tập</th>
+                                        <th>Ngày bắt đầu</th>
+                                        <th>Ngày kết thúc</th>
+                                        <th>Trạng thái</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var dangKy in Model.DangKyGoiTaps)
+                                    {
+                                        <tr>
+                                            <td>@dangKy.MaDangKy</td>
+                                            <td>@dangKy.GoiTap.TenGoiTap</td>
+                                            <td>@dangKy.NgayBatDau.ToString("dd/MM/yyyy")</td>
+                                            <td>@dangKy.NgayKetThuc.ToString("dd/MM/yyyy")</td>
+                                            <td>
+                                                @{
+                                                    string badgeClass = "bg-success";
+                                                    string status = "Đang hoạt động";
+                                                    
+                                                    if (dangKy.TrangThai == "HetHan" || DateTime.Now > dangKy.NgayKetThuc)
+                                                    {
+                                                        badgeClass = "bg-secondary";
+                                                        status = "Đã hết hạn";
+                                                    }
+                                                    else if ((dangKy.NgayKetThuc - DateTime.Now).TotalDays <= 7)
+                                                    {
+                                                        badgeClass = "bg-warning text-dark";
+                                                        status = "Sắp hết hạn";
+                                                    }
+                                                }
+                                                <span class="badge @badgeClass">@status</span>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle me-2"></i>Bạn chưa đăng ký gói tập nào.
+                        </div>
+                    }
+                </div>
+            </div>
+            
+            <!-- Lịch sử thanh toán -->
+            <div class="card border-0 shadow">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0"><i class="bi bi-credit-card me-2"></i>Lịch sử thanh toán</h4>
+                </div>
+                <div class="card-body">
+                    @if (Model.LichSuThanhToans != null && Model.LichSuThanhToans.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Mã thanh toán</th>
+                                        <th>Mã đăng ký</th>
+                                        <th>Ngày thanh toán</th>
+                                        <th>Số tiền</th>
+                                        <th>Phương thức</th>
+                                        <th>Trạng thái</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var thanhToan in Model.LichSuThanhToans)
+                                    {
+                                        <tr>
+                                            <td>#@thanhToan.MaThanhToan</td>
+                                            <td>@thanhToan.MaDangKyGoiTap</td>
+                                            <td>@thanhToan.NgayThanhToan.ToString("dd/MM/yyyy HH:mm")</td>
+                                            <td>@thanhToan.SoTien.ToString("N0") VNĐ</td>
+                                            <td>@thanhToan.PhuongThucThanhToan</td>
+                                            <td>
+                                                @{
+                                                    string statusClass = thanhToan.TrangThai == "ThanhCong" ? "bg-success" : "bg-danger";
+                                                    string statusText = thanhToan.TrangThai == "ThanhCong" ? "Thành công" : "Thất bại";
+                                                }
+                                                <span class="badge @statusClass">@statusText</span>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle me-2"></i>Chưa có lịch sử thanh toán nào.
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Thêm animation khi load trang
+            $('.card').addClass('animate__animated animate__fadeIn');
+        });
+    </script>
+}

@@ -1,0 +1,128 @@
+﻿@model IEnumerable<GYM_Manage.Models.BaiViet>
+@{
+    ViewData["Title"] = "Quản Lý Bài Viết";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container-fluid">
+    <h4 class="d-flex justify-content-between align-items-center mb-4">
+        <span class="fw-bolder">Quản Lý Bài Viết</span>
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="bi bi-plus"></i>
+            <span>Thêm mới</span>
+        </a>
+    </h4>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+            <h6 class="m-0 font-weight-bold">Danh sách</h6>
+            <form asp-action="Search" method="get" class="d-flex">
+                <input type="text" name="keyword" class="form-control me-2" placeholder="Tìm kiếm bài viết...">
+                <button type="submit" class="btn btn-outline-primary">
+                    <i class="bi bi-search"></i>
+                </button>
+            </form>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>Mã bài viết</th>
+                            <th>Hình ảnh</th>
+                            <th>Tiêu đề</th>
+                            <th>Người tạo</th>
+                            <th>Ngày đăng</th>
+                            <th>Ngày cập nhật</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.MaBaiViet</td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(item.HinhAnh))
+                                    {
+                                        <img src="@item.HinhAnh" alt="@item.TieuDe" class="img-thumbnail" style="width: 80px; height: 60px; object-fit: cover;" />
+                                    }
+                                    else
+                                    {
+                                        <img src="~/images/no-image.png" alt="No Image" class="img-thumbnail" style="width: 80px; height: 60px; object-fit: cover;" />
+                                    }
+                                </td>
+                                <td>@item.TieuDe</td>
+                                <td>@item.NguoiTao?.HoTen</td>
+                                <td>@item.NgayDang.ToString("dd/MM/yyyy")</td>
+                                <td>@(item.NgayCapNhat?.ToString("dd/MM/yyyy") ?? "-")</td>
+                                <td>
+                                    <span class="badge @(item.TrangThai == "HienThi" ? "bg-success" : "bg-secondary")" 
+                                          id="status-@item.MaBaiViet">
+                                        @(item.TrangThai == "HienThi" ? "Hiển thị" : "Ẩn")
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a asp-action="Details" asp-route-id="@item.MaBaiViet" class="btn btn-sm btn-info" title="Xem chi tiết">
+                                            <i class="bi bi-info-circle"></i>
+                                        </a>
+                                        <a asp-action="Edit" asp-route-id="@item.MaBaiViet" class="btn btn-sm btn-primary" title="Sửa">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <button type="button" class="btn btn-sm btn-warning" 
+                                                onclick="changeStatus(@item.MaBaiViet)" title="Đổi trạng thái">
+                                            <i class="bi bi-toggle-on"></i>
+                                        </button>
+                                        <a asp-action="Delete" asp-route-id="@item.MaBaiViet"
+                                           class="btn btn-sm btn-danger"
+                                           title="Xóa"
+                                           onclick="return confirm('Bạn có chắc chắn muốn xóa bài viết này không?');">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function changeStatus(id) {
+            if (confirm('Bạn có muốn thay đổi trạng thái bài viết này?')) {
+                $.ajax({
+                    url: '@Url.Action("ChangeStatus")',
+                    type: 'POST',
+                    data: { id: id },
+                    success: function (result) {
+                        if (result.success) {
+                            // Cập nhật UI
+                            var statusBadge = $('#status-' + id);
+                            statusBadge.text(result.statusText);
+                            
+                            if (result.newStatus === 'HienThi') {
+                                statusBadge.removeClass('bg-secondary').addClass('bg-success');
+                            } else {
+                                statusBadge.removeClass('bg-success').addClass('bg-secondary');
+                            }
+                            
+                            // Hiển thị thông báo
+                            alert(result.message);
+                        } else {
+                            alert(result.message);
+                        }
+                    },
+                    error: function () {
+                        alert('Đã xảy ra lỗi khi thay đổi trạng thái!');
+                    }
+                });
+            }
+        }
+    </script>
+}

@@ -1,0 +1,295 @@
+﻿@model GYM_Manage.Controllers.Admin.DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Dashboard</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active">Tổng quan hệ thống</li>
+    </ol>
+
+    <!-- Thống kê tổng quan -->
+    <div class="row">
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-primary text-white mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="mb-0">@Model.TongThanhVien</h5>
+                            <div class="small">Tổng thành viên</div>
+                        </div>
+                        <div>
+                            <i class="bi bi-people fs-1"></i>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-success text-white mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="mb-0">@Model.DoanhThuThang.ToString("N0") VNĐ</h5>
+                            <div class="small">Doanh thu tháng</div>
+                        </div>
+                        <div>
+                            <i class="bi bi-currency-dollar fs-1"></i>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-warning text-white mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="mb-0">@Model.TongThietBi</h5>
+                            <div class="small">Tổng thiết bị</div>
+                        </div>
+                        <div>
+                            <i class="bi bi-tools fs-1"></i>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-danger text-white mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="mb-0">@Model.ThanhVienMoi</h5>
+                            <div class="small">Thành viên mới (30 ngày)</div>
+                        </div>
+                        <div>
+                            <i class="bi bi-person-plus fs-1"></i>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+
+    <!-- Biểu đồ doanh thu -->
+    <div class="row">
+        <div class="col-xl-8">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="bi bi-bar-chart-line me-1"></i>
+                    Doanh thu theo tháng (@DateTime.Now.Year)
+                </div>
+                <div class="card-body">
+                    <canvas id="doanhThuChart" width="100%" height="40"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="bi bi-pie-chart me-1"></i>
+                    Tình trạng thiết bị
+                </div>
+                <div class="card-body">
+                    <canvas id="thietBiChart" width="100%" height="50"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Thanh toán gần đây -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="bi bi-table me-1"></i>
+            Thanh toán gần đây
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Mã GD</th>
+                            <th>Thời gian</th>
+                            <th>Khách hàng</th>
+                            <th>Gói tập</th>
+                            <th>Số tiền</th>
+                            <th>Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ThanhToanGanDay)
+                        {
+                            <tr>
+                                <td>@item.MaThanhToan</td>
+                                <td>@item.NgayThanhToan.ToString("dd/MM/yyyy HH:mm")</td>
+                                <td>@item.ThanhVien.NguoiDung.HoTen</td>
+                                <td>@item.DangKyGoiTap.GoiTap.TenGoiTap</td>
+                                <td class="text-end">@item.SoTien.ToString("N0") VNĐ</td>
+                                <td>
+                                    @switch (item.TrangThai)
+                                    {
+                                        case "ThanhCong":
+                                            <span class="badge bg-success">Thành công</span>
+                                            break;
+                                        case "DangXuLy":
+                                            <span class="badge bg-warning text-dark">Đang xử lý</span>
+                                            break;
+                                        case "ThatBai":
+                                            <span class="badge bg-danger">Thất bại</span>
+                                            break;
+                                        case "HoanTien":
+                                            <span class="badge bg-info text-dark">Hoàn tiền</span>
+                                            break;
+                                        default:
+                                            <span class="badge bg-secondary">@item.TrangThai</span>
+                                            break;
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Báo cáo nhanh -->
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="bi bi-file-earmark-text me-1"></i>
+                    Báo cáo nhanh
+                </div>
+                <div class="card-body">
+                    <form asp-action="XuatBaoCaoDoanhThu" method="get" target="_blank">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Từ ngày</label>
+                                <input type="date" name="tuNgay" class="form-control" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Đến ngày</label>
+                                <input type="date" name="denNgay" class="form-control" />
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-download me-1"></i> Xuất báo cáo doanh thu
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="bi bi-info-circle me-1"></i>
+                    Thông tin hệ thống
+                </div>
+                <div class="card-body">
+                    <p><strong>Tổng người dùng:</strong> @Model.TongNguoiDung</p>
+                    <p><strong>Tổng giao dịch:</strong> @Model.TongThanhToan</p>
+                    <p><strong>Giao dịch thành công:</strong> @Model.ThanhToanThanhCong</p>
+                    <p><strong>Doanh thu năm @DateTime.Now.Year:</strong> @Model.DoanhThuNam.ToString("N0") VNĐ</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Dữ liệu cho biểu đồ doanh thu
+        var doanhThuData = {
+            labels: [@Html.Raw(string.Join(",", Model.DoanhThuTheoThang.Select(dt => dt.Thang)))],
+            datasets: [{
+                label: 'Doanh thu (VNĐ)',
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1,
+                data: [@Html.Raw(string.Join(",", Model.DoanhThuTheoThang.Select(dt => dt.DoanhThu)))]
+            }]
+        };
+
+        // Dữ liệu cho biểu đồ thiết bị
+        var thietBiData = {
+            labels: ['Hoạt động', 'Bảo trì', 'Đang sửa chữa'],
+            datasets: [{
+                data: [@Model.ThietBiHoatDong, @Model.ThietBiBaoTri, @Model.TongThietBi - @Model.ThietBiHoatDong - @Model.ThietBiBaoTri],
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(255, 99, 132, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(255, 99, 132, 1)'
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        // Vẽ biểu đồ doanh thu
+        var doanhThuCtx = document.getElementById('doanhThuChart').getContext('2d');
+        var doanhThuChart = new Chart(doanhThuCtx, {
+            type: 'bar',
+            data: doanhThuData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return value.toLocaleString('vi-VN') + ' VNĐ';
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': ' + context.raw.toLocaleString('vi-VN') + ' VNĐ';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Vẽ biểu đồ thiết bị
+        var thietBiCtx = document.getElementById('thietBiChart').getContext('2d');
+        var thietBiChart = new Chart(thietBiCtx, {
+            type: 'pie',
+            data: thietBiData,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    }
+                }
+            }
+        });
+
+        // DataTable
+        $(document).ready(function () {
+            $('#dataTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Vietnamese.json"
+                },
+                "order": [[1, "desc"]],
+                "pageLength": 5
+            });
+        });
+    </script>
+}

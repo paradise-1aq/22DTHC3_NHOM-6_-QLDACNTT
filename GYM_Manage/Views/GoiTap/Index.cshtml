@@ -1,0 +1,139 @@
+@model IEnumerable<GYM_Manage.Models.GoiTap>
+@{
+	ViewData["Title"] = "Gói Tập";
+}
+
+<div class="container py-5">
+	<!-- Header Section -->
+	<div class="row mb-5">
+		<div class="col-12 text-center">
+			<h1 class="fw-bold display-4 mb-3">Gói Tập Gym</h1>
+			<p class="lead text-muted">Lựa chọn gói tập phù hợp với mục tiêu của bạn</p>
+			<!-- Search Form -->
+			<div class="col-md-6 mx-auto mt-4">
+				<form asp-action="Search" method="get" class="search-form position-relative">
+					<div class="input-group shadow-lg rounded-pill overflow-hidden">
+						<input type="text" name="keyword" class="form-control border-0 py-3 ps-4" placeholder="Tìm kiếm gói tập..." aria-label="Tìm kiếm">
+						<input type="number" name="soNgay" class="form-control border-0 border-start  py-3" placeholder="Số ngày tối đa" aria-label="Số ngày" min="1">
+						<button type="submit" class="btn btn-primary px-4"><i class="bi bi-search me-1"></i> Tìm kiếm</button>
+					</div>
+				</form>
+
+			</div>
+		</div>
+	</div>
+
+
+
+	<!-- Packages Grid -->
+	<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+		@foreach (var item in Model)
+		{
+			<div class="col">
+				<div class="card h-100 shadow-sm hover-shadow">
+					<div class="position-relative">
+						<img src="@(string.IsNullOrEmpty(item.AnhDemo) ? "/images/default-package.jpg" : item.AnhDemo)"
+							 class="card-img-top" alt="@item.TenGoiTap" style="height: 200px; object-fit: cover;">
+
+						@if (item.TrangThai == "KhuyenMai")
+						{
+							<div class="position-absolute top-0 end-0 bg-warning text-dark p-2 m-2 rounded-pill">
+								<i class="bi bi-tag-fill"></i> Khuyến mãi
+							</div>
+						}
+					</div>
+
+					<div class="card-body d-flex flex-column">
+						<h5 class="card-title fw-bold">@item.TenGoiTap</h5>
+						<div class="d-flex justify-content-between align-items-center mb-2">
+							<span class="badge bg-primary rounded-pill">@item.ThoiHan ngày</span>
+							<h4 class="text-primary mb-0">@item.GiaTien.ToString("N0") VNĐ</h4>
+						</div>
+						<p class="card-text flex-grow-1">@(item.MoTa?.Length > 100 ? item.MoTa.Substring(0, 100) + "..." : item.MoTa)</p>
+						<div class="d-grid gap-2">
+							<a class="btn btn-outline-primary">
+								<i class="bi bi-info-circle"></i> Nhanh tay đăng ký
+							</a>
+							<a asp-action="DangKy" asp-route-id="@item.MaGoiTap" class="btn btn-primary">
+								<i class="bi bi-check-circle"></i> Đăng ký ngay
+							</a>
+						</div>
+					</div>
+
+					<div class="card-footer bg-transparent">
+						<div class="d-flex justify-content-between">
+							<small class="text-muted"><i class="bi bi-clock"></i> Thời hạn: @item.ThoiHan ngày</small>
+							<small class="text-muted">
+								<i class="bi bi-people-fill"></i> Phù hợp mọi đối tượng
+							</small>
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+
+	<!-- No Results Message -->
+	@if (!Model.Any())
+	{
+		<div class="text-center py-5">
+			<i class="bi bi-search display-1 text-muted"></i>
+			<h3 class="mt-3">Không tìm thấy gói tập nào</h3>
+			<p class="text-muted">Vui lòng thử lại với từ khóa khác hoặc liên hệ với chúng tôi để được tư vấn.</p>
+			<a asp-action="Index" class="btn btn-outline-primary mt-3">Xem tất cả gói tập</a>
+		</div>
+	}
+
+	<!-- Benefits Section -->
+	<div class="row mt-5 pt-5 border-top">
+		<div class="col-12 text-center mb-4">
+			<h2 class="fw-bold">Lợi ích khi tham gia</h2>
+			<p class="text-muted">Tại sao nên chọn gói tập của chúng tôi?</p>
+		</div>
+
+		<div class="col-md-4 mb-4">
+			<div class="text-center">
+				<i class="bi bi-trophy display-4 text-primary"></i>
+				<h4 class="mt-3">Huấn luyện viên chuyên nghiệp</h4>
+				<p class="text-muted">Đội ngũ HLV giàu kinh nghiệm, được đào tạo bài bản</p>
+			</div>
+		</div>
+
+		<div class="col-md-4 mb-4">
+			<div class="text-center">
+				<i class="bi bi-gear display-4 text-primary"></i>
+				<h4 class="mt-3">Trang thiết bị hiện đại</h4>
+				<p class="text-muted">Máy móc nhập khẩu, đảm bảo an toàn khi tập luyện</p>
+			</div>
+		</div>
+
+		<div class="col-md-4 mb-4">
+			<div class="text-center">
+				<i class="bi bi-calendar-check display-4 text-primary"></i>
+				<h4 class="mt-3">Lịch tập linh hoạt</h4>
+				<p class="text-muted">Mở cửa từ 5:30 - 22:00 tất cả các ngày trong tuần</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+	.hover-shadow:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+		transition: all 0.3s ease;
+	}
+
+	.search-form .form-control:focus {
+		box-shadow: none;
+	}
+
+	.search-form .input-group:hover {
+		transform: translateY(-2px);
+		transition: all 0.3s ease;
+	}
+
+	.search-form .input-group {
+		transition: all 0.3s ease;
+	}
+</style>

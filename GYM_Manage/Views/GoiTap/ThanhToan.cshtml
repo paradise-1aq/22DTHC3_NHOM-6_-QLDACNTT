@@ -1,0 +1,235 @@
+@{
+    ViewData["Title"] = "Thanh Toán Gói Tập";
+    Layout = "_Layout";
+}
+
+<div class="container py-5">
+    <!-- Header Section -->
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h1 class="fw-bold display-4 mb-3">Thanh Toán Gói Tập</h1>
+            <p class="lead text-muted">Hoàn tất thanh toán để kích hoạt gói tập của bạn</p>
+        </div>
+    </div>
+
+    <!-- Payment Section -->
+    <div class="row">
+        <!-- Order Summary -->
+        <div class="col-lg-6 mb-4">
+            <div class="card border-0 shadow-lg h-100">
+                <div class="card-header bg-primary text-white py-3">
+                    <h4 class="mb-0"><i class="bi bi-cart-check me-2"></i>Thông tin đơn hàng</h4>
+                </div>
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center mb-4">
+                        <img src="@(string.IsNullOrEmpty(ViewBag.GoiTap.AnhDemo) ? "/images/default-package.jpg" : ViewBag.GoiTap.AnhDemo)" 
+                             class="rounded me-3" alt="@ViewBag.GoiTap.TenGoiTap" style="width: 80px; height: 80px; object-fit: cover;">
+                        <div>
+                            <h5 class="fw-bold mb-1">@ViewBag.GoiTap.TenGoiTap</h5>
+                            <p class="text-muted mb-0">Thời hạn: @ViewBag.GoiTap.ThoiHan ngày</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-light p-3 rounded mb-4">
+                        <h5 class="mb-3">Chi tiết gói tập</h5>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Giá gói tập:</span>
+                            <span class="fw-bold">@ViewBag.GoiTap.GiaTien.ToString("N0") VNĐ</span>
+                        </div>
+                       
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Giảm giá:</span>
+                            <span class="fw-bold text-success">0 VNĐ</span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between">
+                            <span class="fw-bold">Tổng thanh toán:</span>
+                            <span class="fw-bold text-primary fs-5">@((ViewBag.GoiTap.GiaTien).ToString("N0")) VNĐ</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-light p-3 rounded mb-4">
+                        <h5 class="mb-3">Thông tin khách hàng</h5>
+                        <div class="mb-2">
+                            <span class="fw-bold">Họ tên:</span> @ViewBag.NguoiDung.HoTen
+                        </div>
+                        <div class="mb-2">
+                            <span class="fw-bold">Email:</span> @ViewBag.NguoiDung.Email
+                        </div>
+                       
+                    </div>
+
+                    <div class="bg-light p-3 rounded">
+                        <h5 class="mb-3">Thông tin đăng ký</h5>
+                       
+                        <div class="mb-2">
+                            <span class="fw-bold">Ngày đăng ký:</span> @DateTime.Now.ToString("dd/MM/yyyy")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Form -->
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-lg">
+                <div class="card-header bg-primary text-white py-3">
+                    <h4 class="mb-0"><i class="bi bi-credit-card me-2"></i>Phương thức thanh toán</h4>
+                </div>
+                <div class="card-body p-4">
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger">
+                            @TempData["ErrorMessage"]
+                        </div>
+                    }
+
+                    <form asp-action="ThanhToan" method="post">
+                        <input type="hidden" name="maGoiTap" value="@ViewBag.GoiTap.MaGoiTap" />
+                        <input type="hidden" name="maNguoiDung" value="@ViewBag.NguoiDung.MaNguoiDung" />
+                        <input type="hidden" name="ngayDangKy" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                        <input type="hidden" name="tongTien" value="@(ViewBag.GoiTap.GiaTien * 1.1m)" />
+
+                        <div class="mb-4">
+                            <h5>Thông tin cá nhân</h5>
+                            <div class="mb-3">
+                                <label for="ngaySinh" class="form-label">Ngày sinh</label>
+                                <input type="date" class="form-control" id="ngaySinh" name="ngaySinh" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="gioiTinh" class="form-label">Giới tính</label>
+                                <select class="form-select" id="gioiTinh" name="gioiTinh" required>
+                                    <option value="">-- Chọn giới tính --</option>
+                                    <option value="Nam">Nam</option>
+                                    <option value="Nữ">Nữ</option>
+                                    <option value="Khác">Khác</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="soDienThoai" class="form-label">Số điện thoại</label>
+                                <input type="tel" class="form-control" id="soDienThoai" name="soDienThoai" maxlength="15" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="diaChi" class="form-label">Địa chỉ</label>
+                                <textarea class="form-control" id="diaChi" name="diaChi" rows="2" required></textarea>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <h5>Chọn phương thức thanh toán</h5>
+                            
+                            <div class="form-check mb-3 border rounded p-3">
+                                <input class="form-check-input" type="radio" name="phuongThucThanhToan" id="banking" value="ChuyenKhoan" checked>
+                                <label class="form-check-label d-flex align-items-center" for="banking">
+                                    <i class="bi bi-bank me-2 fs-4"></i>
+                                    <div>
+                                        <span class="d-block fw-bold">Chuyển khoản ngân hàng</span>
+                                        <small class="text-muted">Chuyển khoản qua tài khoản ngân hàng</small>
+                                    </div>
+                                </label>
+                            </div>
+                            
+                            <div class="form-check mb-3 border rounded p-3">
+                                <input class="form-check-input" type="radio" name="phuongThucThanhToan" id="momo" value="MoMo">
+                                <label class="form-check-label d-flex align-items-center" for="momo">
+                                    <i class="bi bi-wallet2 me-2 fs-4 text-danger"></i>
+                                    <div>
+                                        <span class="d-block fw-bold">Ví MoMo</span>
+                                        <small class="text-muted">Thanh toán qua ví điện tử MoMo</small>
+                                    </div>
+                                </label>
+                            </div>
+                            
+                            <div class="form-check mb-3 border rounded p-3">
+                                <input class="form-check-input" type="radio" name="phuongThucThanhToan" id="vnpay" value="VNPay">
+                                <label class="form-check-label d-flex align-items-center" for="vnpay">
+                                    <i class="bi bi-credit-card me-2 fs-4 text-primary"></i>
+                                    <div>
+                                        <span class="d-block fw-bold">VNPay</span>
+                                        <small class="text-muted">Thanh toán qua cổng VNPay</small>
+                                    </div>
+                                </label>
+                            </div>
+                            
+                            <div class="form-check mb-3 border rounded p-3">
+                                <input class="form-check-input" type="radio" name="phuongThucThanhToan" id="cash" value="TienMat">
+                                <label class="form-check-label d-flex align-items-center" for="cash">
+                                    <i class="bi bi-cash-coin me-2 fs-4 text-success"></i>
+                                    <div>
+                                        <span class="d-block fw-bold">Tiền mặt</span>
+                                        <small class="text-muted">Thanh toán trực tiếp tại phòng tập</small>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5>Ghi chú thanh toán</h5>
+                            <textarea name="ghiChu" class="form-control" rows="3" placeholder="Nhập ghi chú thanh toán (nếu có)"></textarea>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="acceptTerms" required>
+                                <label class="form-check-label" for="acceptTerms">
+                                    Tôi đồng ý với <a href="#" class="text-decoration-none">điều khoản thanh toán</a> và <a href="#" class="text-decoration-none">chính sách bảo mật</a>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-lock-fill me-2"></i>Xác nhận thanh toán
+                            </button>
+                            <a asp-action="DangKy" asp-route-id="@ViewBag.GoiTap.MaGoiTap" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-left me-2"></i>Quay lại
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="card border-0 shadow-lg mt-4">
+                <div class="card-body p-4">
+                    <h5><i class="bi bi-shield-check me-2 text-success"></i>Thanh toán an toàn</h5>
+                    <p class="mb-0">Thông tin thanh toán của bạn được bảo mật tuyệt đối. Chúng tôi sử dụng các biện pháp mã hóa tiên tiến để bảo vệ thông tin của bạn.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        transition: all 0.3s ease;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    
+    .btn-primary {
+        transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,123,255,0.3);
+    }
+    
+    .form-check-input:checked {
+        background-color: #4e73df;
+        border-color: #4e73df;
+    }
+    
+    .form-check {
+        cursor: pointer;
+    }
+    
+    .card-header {
+        border-bottom: 0;
+    }
+    
+    .badge {
+        font-size: 0.85em;
+        padding: 0.35em 0.65em;
+    }
+</style>

@@ -1,0 +1,256 @@
+@model GYM_Manage.Controllers.AboutViewModel
+@{
+    ViewData["Title"] = "Về chúng tôi";
+}
+
+<!-- Hero Section -->
+<section class="bg-primary text-white py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">Về GYM Center</h1>
+                <p class="lead mb-4">Chúng tôi là trung tâm thể hình hiện đại với đội ngũ huấn luyện viên chuyên nghiệp và trang thiết bị tập luyện tiên tiến.</p>
+                <p class="mb-5">Sứ mệnh của chúng tôi là giúp mọi người đạt được mục tiêu sức khỏe và thể hình thông qua các chương trình tập luyện khoa học và hiệu quả.</p>
+                <a href="#trainers" class="btn btn-light btn-lg px-4 me-2">Đội ngũ huấn luyện viên</a>
+                <a href="#equipment" class="btn btn-outline-light btn-lg px-4">Trang thiết bị</a>
+            </div>
+            <div class="col-lg-6 d-none d-lg-block">
+                <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" class="img-fluid rounded-3 shadow" alt="Gym">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our Story Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1075&q=80" class="img-fluid rounded-3 shadow" alt="Gym Interior">
+            </div>
+            <div class="col-lg-6">
+                <div class="ps-lg-4">
+                    <h6 class="text-primary fw-bold">CÂUCHUYEN CỦA CHÚNG TÔI</h6>
+                    <h2 class="display-5 fw-bold mb-4">Hơn 10 năm kinh nghiệm trong lĩnh vực thể hình</h2>
+                    <p class="lead">GYM Center được thành lập với mục tiêu mang đến trải nghiệm tập luyện tốt nhất cho mọi người.</p>
+                    <p>Chúng tôi không chỉ cung cấp không gian tập luyện hiện đại mà còn đồng hành cùng bạn trong hành trình cải thiện sức khỏe và thể chất. Với đội ngũ huấn luyện viên giàu kinh nghiệm và trang thiết bị hiện đại, chúng tôi cam kết mang đến kết quả tốt nhất cho khách hàng.</p>
+                    
+                    <div class="row mt-4">
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-primary rounded-circle p-3 me-3">
+                                    <i class="bi bi-people-fill text-white fs-4"></i>
+                                </div>
+                                <div>
+                                    <h5 class="fw-bold mb-1">Huấn luyện viên chuyên nghiệp</h5>
+                                    <p class="mb-0 text-muted">Đội ngũ HLV giàu kinh nghiệm</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-primary rounded-circle p-3 me-3">
+                                    <i class="bi bi-gear-fill text-white fs-4"></i>
+                                </div>
+                                <div>
+                                    <h5 class="fw-bold mb-1">Thiết bị hiện đại</h5>
+                                    <p class="mb-0 text-muted">Máy móc nhập khẩu chính hãng</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Trainers Section -->
+<section id="trainers" class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h6 class="text-primary fw-bold">ĐỘI NGŨ CỦA CHÚNG TÔI</h6>
+            <h2 class="display-5 fw-bold">Huấn Luyện Viên Chuyên Nghiệp</h2>
+            <p class="lead mx-auto" style="max-width: 700px;">Đội ngũ huấn luyện viên giàu kinh nghiệm và chuyên môn cao, sẵn sàng hỗ trợ bạn đạt được mục tiêu tập luyện.</p>
+        </div>
+        
+        <div class="row g-4">
+            @foreach (var hlv in Model.HuanLuyenViens)
+            {
+                <div class="col-md-6 col-lg-3">
+                    <div class="card border-0 shadow-sm h-100 trainer-card">
+                        <div class="position-relative">
+                            <img src="@(string.IsNullOrEmpty(hlv.AnhDaiDien) ? "https://ui-avatars.com/api/?name=" + hlv.NguoiDung.HoTen + "&background=4e73df&color=fff&size=256" : hlv.AnhDaiDien)" 
+                                 class="card-img-top" alt="@hlv.NguoiDung.HoTen" style="height: 280px; object-fit: cover;">
+                            <div class="trainer-social">
+                                <a href="#" class="btn btn-primary btn-sm rounded-circle"><i class="bi bi-facebook"></i></a>
+                                <a href="#" class="btn btn-primary btn-sm rounded-circle"><i class="bi bi-instagram"></i></a>
+                                <a href="#" class="btn btn-primary btn-sm rounded-circle"><i class="bi bi-linkedin"></i></a>
+                            </div>
+                        </div>
+                        <div class="card-body text-center">
+                            <h5 class="card-title fw-bold mb-1">@hlv.NguoiDung.HoTen</h5>
+                            <p class="text-primary mb-2">@hlv.ChuyenMon</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Equipment Section -->
+<section id="equipment" class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h6 class="text-primary fw-bold">TRANG THIẾT BỊ</h6>
+            <h2 class="display-5 fw-bold">Thiết Bị Hiện Đại</h2>
+            <p class="lead mx-auto" style="max-width: 700px;">Chúng tôi đầu tư vào các thiết bị tập luyện hiện đại nhất để đảm bảo hiệu quả tập luyện tối ưu cho khách hàng.</p>
+        </div>
+        
+        <div class="row g-4">
+            @foreach (var thietBi in Model.ThietBis)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100 equipment-card">
+                        <img src="https://via.placeholder.com/300x200?text=Thiết+bị+tập+gym" 
+                             class="card-img-top" alt="@thietBi.TenThietBi" style="height: 220px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">@thietBi.TenThietBi</h5>
+                            
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose Us Section -->
+<section class="py-5 bg-primary text-white">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold">Tại Sao Chọn Chúng Tôi?</h2>
+            <p class="lead mx-auto" style="max-width: 700px;">Chúng tôi cam kết mang đến trải nghiệm tập luyện tốt nhất với nhiều ưu điểm vượt trội</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="text-center p-4 h-100">
+                    <div class="bg-white rounded-circle mx-auto mb-4 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                        <i class="bi bi-trophy fs-1 text-primary"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3">Chất Lượng Hàng Đầu</h4>
+                    <p>Chúng tôi không ngừng nâng cao chất lượng dịch vụ để đáp ứng nhu cầu của khách hàng.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="text-center p-4 h-100">
+                    <div class="bg-white rounded-circle mx-auto mb-4 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                        <i class="bi bi-people fs-1 text-primary"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3">Đội Ngũ Chuyên Nghiệp</h4>
+                    <p>Huấn luyện viên của chúng tôi được đào tạo bài bản và có nhiều năm kinh nghiệm.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="text-center p-4 h-100">
+                    <div class="bg-white rounded-circle mx-auto mb-4 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                        <i class="bi bi-gear fs-1 text-primary"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3">Thiết Bị Hiện Đại</h4>
+                    <p>Trang bị đầy đủ máy móc hiện đại, nhập khẩu chính hãng từ các thương hiệu uy tín.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="text-center p-4 h-100">
+                    <div class="bg-white rounded-circle mx-auto mb-4 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                        <i class="bi bi-heart fs-1 text-primary"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3">Chăm Sóc Tận Tâm</h4>
+                    <p>Chúng tôi luôn đặt khách hàng làm trung tâm và cung cấp dịch vụ chăm sóc tận tâm.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="display-5 fw-bold mb-4">Sẵn sàng bắt đầu hành trình của bạn?</h2>
+                <p class="lead mb-4">Đăng ký ngay hôm nay để trải nghiệm dịch vụ tập luyện chất lượng cao tại GYM Center</p>
+                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                    <a href="/GoiTap" class="btn btn-primary btn-lg px-4 me-sm-3">Đăng ký tập thử</a>
+                    <a href="/Contact" class="btn btn-outline-primary btn-lg px-4">Liên hệ tư vấn</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Trainer Card Styles */
+    .trainer-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        overflow: hidden;
+    }
+    
+    .trainer-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+    }
+    
+    .trainer-social {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 15px;
+        background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .trainer-card:hover .trainer-social {
+        opacity: 1;
+    }
+    
+    /* Equipment Card Styles */
+    .equipment-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .equipment-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+    }
+    
+    /* Section Styles */
+    section {
+        overflow: hidden;
+    }
+    
+    .bg-primary {
+        background: linear-gradient(135deg, #4e73df 0%, #224abe 100%) !important;
+    }
+    
+    .btn-primary {
+        background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
+        border: none;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #224abe 0%, #1a3a94 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(34, 74, 190, 0.4);
+    }
+</style>
+
+

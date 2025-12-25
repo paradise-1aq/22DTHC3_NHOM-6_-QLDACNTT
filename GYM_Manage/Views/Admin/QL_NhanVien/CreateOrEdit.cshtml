@@ -1,0 +1,88 @@
+﻿@model GYM_Manage.Models.NguoiDung
+@{
+    ViewData["Title"] = Model?.MaNguoiDung > 0 ? "Chỉnh Sửa Nhân Viên" : "Thêm Mới Nhân Viên";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container-fluid">
+    <h4 class="mb-4">
+        <span class="fw-bolder">@ViewData["Title"]</span>
+    </h4>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold">Thông tin nhân viên</h6>
+        </div>
+        <div class="card-body">
+            <form asp-action="@(Model?.MaNguoiDung > 0 ? "Edit" : "Create")" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                @if (Model?.MaNguoiDung > 0)
+                {
+                    <input type="hidden" asp-for="MaNguoiDung" />
+                    <input type="hidden" asp-for="NgayTao" />
+                    <input type="hidden" asp-for="LanDangNhapCuoi" />
+                }
+
+                <input type="hidden" asp-for="VaiTro" value="Staff" />
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="TenDangNhap" class="form-label">Tên đăng nhập</label>
+                            <input asp-for="TenDangNhap" class="form-control" required />
+                            <span asp-validation-for="TenDangNhap" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="MatKhau" class="form-label">Mật khẩu</label>
+                            <input asp-for="MatKhau" class="form-control" type="password" required="@(Model?.MaNguoiDung == null)" />
+                            @if (Model?.MaNguoiDung == null)
+                            {
+                                <span asp-validation-for="MatKhau" class="text-danger"></span>
+                            }
+                            @if (Model?.MaNguoiDung > 0)
+                            {
+                                <small class="form-text text-danger">*Để trống nếu không muốn thay đổi mật khẩu</small>
+                            }
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="Email" class="form-label">Email</label>
+                            <input asp-for="Email" class="form-control" type="email" required />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="HoTen" class="form-label">Họ tên</label>
+                            <input asp-for="HoTen" class="form-control" required />
+                            <span asp-validation-for="HoTen" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="form-group mb-3">
+                            <label asp-for="TrangThai" class="form-label">Trạng thái</label>
+                            <select asp-for="TrangThai" class="form-select">
+                                <option value="HoatDong">Hoạt động</option>
+                                <option value="KhongHoatDong">Không hoạt động</option>
+                            </select>
+                            <span asp-validation-for="TrangThai" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="d-flex justify-content-between">
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Quay lại
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-save"></i> Lưu
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
